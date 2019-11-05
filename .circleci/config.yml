@@ -127,11 +127,11 @@ workflows:
     jobs:
       - node:
           filters:
-            tags:
+            branches:
               only: /^forcebuild-.*/
       - android:
           filters:
-            tags:
+            branches:
               only: /^forcebuild-.*/
           requires:
             - node
