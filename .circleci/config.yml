@@ -89,7 +89,7 @@ jobs:
           command: |
             mkdir -p nightly-results/fastlane
             bundle exec fastlane nightly
-            mv fastlane/report.xml nightly-results/fastlane
+            mv app/build/outputs/apk/app-release-unsigned.apk nightly-results/fastlane
 
       - store_artifacts:
           path: nightly-results
