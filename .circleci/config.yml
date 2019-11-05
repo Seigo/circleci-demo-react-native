@@ -49,6 +49,9 @@ jobs:
     docker:
       - image: circleci/android:api-27-node8-alpha
     steps:
+      - run:
+          name: accept Android SDK licenses
+          command: sdkmanager --update && yes | sdkmanager --licenses
       - checkout:
           path: ~/demo-react-native
 
