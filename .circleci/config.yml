@@ -125,7 +125,7 @@ workflows:
             - node
   forcebuild:
     jobs:
-      - node
+      - node:
           filters:
             tags:
               only: /^forcebuild-.*/
