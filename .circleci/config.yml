@@ -103,16 +103,15 @@ jobs:
             export GOPATH=$HOME/work
             export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
             go get -u github.com/tcnksm/ghr
-            VERSION=1.2.3.4
-            echo $GITHUB_TOKEN, $CIRCLE_PROJECT_USERNAME, $CIRCLE_PROJECT_REPONAME, $CIRCLE_SHA1, $VERSION
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./app/build/outputs/apk/
+            echo $GITHUB_TOKEN, $CIRCLE_PROJECT_USERNAME, $CIRCLE_PROJECT_REPONAME, $CIRCLE_SHA1, $CIRCLE_BRANCH, $CIRCLE_TAG, $CIRCLE_WORKFLOW_ID
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_BRANCH}-${CIRCLE_TAG}-${CIRCLE_WORKFLOW_ID} ./app/build/outputs/apk/
 
 workflows:
   version: 2
   nightly:
     triggers:
       - schedule:
-          cron: "35 22 * * *"
+          cron: "59 23 * * *"
           filters:
             branches:
               only:
@@ -123,15 +122,15 @@ workflows:
       - android:
           requires:
             - node
-  forcebuild:
+  forcedbuild:
     jobs:
       - node:
           filters:
             branches:
-              only: /^forcebuild-.*/
+              only: /^forcedbuild-.*/
       - android:
           filters:
             branches:
-              only: /^forcebuild-.*/
+              only: /^forcedbuild-.*/
           requires:
             - node
