@@ -91,9 +91,6 @@ jobs:
             bundle exec fastlane beta
             mv fastlane/report.xml beta-results/fastlane
 
-      - store_beta_results:
-          path: beta-results
-
       - store_artifacts:
           path: beta-results
 
