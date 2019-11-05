@@ -49,12 +49,6 @@ jobs:
     docker:
       - image: circleci/android:api-27-node8-alpha
     steps:
-      - run:
-          name: accept Android SDK licenses
-          command: |
-            sdkmanager --update
-            (echo y; echo y; echo y; echo y; echo y; echo y) | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-            
       - checkout:
           path: ~/demo-react-native
 
@@ -64,6 +58,12 @@ jobs:
       - restore_cache:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
 
+      - run:
+          name: accept Android SDK licenses
+          command: |
+            sdkmanager --update
+            (echo y; echo y; echo y; echo y; echo y; echo y) | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+            
       - run: bundle install
 
       - save_cache:
@@ -83,6 +83,20 @@ jobs:
 
       - store_artifacts:
           path: test-results
+
+      - run:
+          name: fastlane beta
+          command: |
+            mkdir -p beta-results/fastlane
+            bundle exec fastlane beta
+            mv fastlane/report.xml beta-results/fastlane
+
+      - store_beta_results:
+          path: beta-results
+
+      - store_artifacts:
+          path: beta-results
+
 
 workflows:
   version: 2
