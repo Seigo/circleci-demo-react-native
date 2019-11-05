@@ -85,14 +85,14 @@ jobs:
           path: test-results
 
       - run:
-          name: fastlane beta
+          name: fastlane nightly
           command: |
-            mkdir -p beta-results/fastlane
-            bundle exec fastlane beta
-            mv fastlane/report.xml beta-results/fastlane
+            mkdir -p nightly-results/fastlane
+            bundle exec fastlane nightly
+            mv fastlane/report.xml nightly-results/fastlane
 
       - store_artifacts:
-          path: beta-results
+          path: nightly-results
 
 
 workflows:
