@@ -54,6 +54,7 @@ jobs:
           command: |
             sdkmanager --update
             (echo y; echo y; echo y; echo y; echo y; echo y) | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+            
       - checkout:
           path: ~/demo-react-native
 
