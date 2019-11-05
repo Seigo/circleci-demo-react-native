@@ -81,8 +81,8 @@ jobs:
       - store_test_results:
           path: test-results
 
-      - store_artifacts:
-          path: test-results
+      # - store_artifacts:
+      #     path: test-results
 
       - run:
           name: fastlane nightly
@@ -91,9 +91,21 @@ jobs:
             bundle exec fastlane nightly
             mv app/build/outputs/apk/app-release-unsigned.apk nightly-results/fastlane
 
-      - store_artifacts:
-          path: nightly-results
+      # - store_artifacts:
+      #     path: nightly-results
 
+      - run:
+          name: upload to Github Releases
+          command: | 
+            curl -O https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
+            tar xvf go1.12.5.linux-amd64.tar.gz
+            sudo chown -R root:root ./go
+            sudo mv go /usr/local
+            export GOPATH=$HOME/work
+            export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+            go get -u github.com/tcnksm/ghr
+            VERSION=1.2.3.4
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
 
 workflows:
   version: 2
