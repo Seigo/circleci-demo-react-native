@@ -109,9 +109,29 @@ jobs:
 
 workflows:
   version: 2
-  node-android:
+  nightly:
+    triggers:
+      - schedule:
+          cron: "35 22 * * *"
+          filters:
+            branches:
+              only:
+                - master
+                - beta
     jobs:
       - node
       - android:
+          requires:
+            - node
+  forcebuild:
+    jobs:
+      - node
+          filters:
+            tags:
+              only: /^forcebuild-.*/
+      - android:
+          filters:
+            tags:
+              only: /^forcebuild-.*/
           requires:
             - node
