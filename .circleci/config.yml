@@ -51,7 +51,9 @@ jobs:
     steps:
       - run:
           name: accept Android SDK licenses
-          command: sdkmanager --update && yes | sdkmanager --licenses
+          command: |
+            sdkmanager --update
+            (echo y; echo y; echo y; echo y; echo y; echo y) | $ANDROID_HOME/tools/bin/sdkmanager --licenses
       - checkout:
           path: ~/demo-react-native
 
