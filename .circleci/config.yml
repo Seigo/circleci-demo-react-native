@@ -122,15 +122,15 @@ workflows:
       - android:
           requires:
             - node
-  forcedbuild:
+  force:
     jobs:
       - node:
           filters:
-            branches:
-              only: /^forcedbuild-.*/
+            tags:
+              only: /.*-force/
       - android:
           filters:
-            branches:
-              only: /^forcedbuild-.*/
+            tags:
+              only: /.*-force/
           requires:
             - node
