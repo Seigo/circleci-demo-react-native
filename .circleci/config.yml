@@ -114,11 +114,12 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 2 * * *"
+          cron: "6 2 * * *"
           filters:
             branches:
               only:
                 - master
+                - beta
     jobs:
       - node
       - android:
