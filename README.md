@@ -1,6 +1,8 @@
 # CircleCI Demo React Native App
 
+[![GitHub release](http://img.shields.io/github/release/tcnksm/ghr.svg?style=flat-square)][release]
 [![CircleCI](https://circleci.com/gh/Seigo/circleci-demo-react-native.svg?style=svg)](https://circleci.com/gh/Seigo/circleci-demo-react-native)
+
 
 ## Building and running locally
 
