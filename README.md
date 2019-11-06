@@ -1,6 +1,6 @@
 # CircleCI Demo React Native App
 
-[![GitHub release](http://img.shields.io/github/release/tcnksm/ghr.svg?style=flat-square)][release]
+[![GitHub release](http://img.shields.io/github/release/tcnksm/ghr.svg?style=flat-square)](https://github.com/Seigo/circleci-demo-react-native/releases)
 [![CircleCI](https://circleci.com/gh/Seigo/circleci-demo-react-native.svg?style=svg)](https://circleci.com/gh/Seigo/circleci-demo-react-native)
 
 

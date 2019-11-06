@@ -104,7 +104,7 @@ jobs:
             export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
             go get -u github.com/tcnksm/ghr
             echo $GITHUB_TOKEN, $CIRCLE_PROJECT_USERNAME, $CIRCLE_PROJECT_REPONAME, $CIRCLE_SHA1, $CIRCLE_BRANCH, $CIRCLE_TAG, $CIRCLE_WORKFLOW_ID
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_BRANCH}-${CIRCLE_TAG} ./app/build/outputs/apk/
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_BRANCH}$(if [ -z "$CIRCLE_TAG" ]; then echo ""; else echo "-${CIRCLE_TAG}"; fi ) ./app/build/outputs/apk/
 
 workflows:
   version: 2
