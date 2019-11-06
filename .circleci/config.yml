@@ -104,33 +104,35 @@ jobs:
             export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
             go get -u github.com/tcnksm/ghr
             echo $GITHUB_TOKEN, $CIRCLE_PROJECT_USERNAME, $CIRCLE_PROJECT_REPONAME, $CIRCLE_SHA1, $CIRCLE_BRANCH, $CIRCLE_TAG, $CIRCLE_WORKFLOW_ID
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_BRANCH}-${CIRCLE_TAG} ./app/build/outputs/apk/
+
+            CURRENT_TIMESTAMP=$(date -u +%Y%m%d-%H%M%S)
+            RELEASE_TAG=${CIRCLE_BRANCH}$(if [ -z "$CIRCLE_TAG" ]; then echo "-${CURRENT_TIMESTAMP}"; else echo "-${CIRCLE_TAG}"; fi )
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${RELEASE_TAG} ./app/build/outputs/apk/
 
 workflows:
   version: 2
   nightly:
     triggers:
       - schedule:
-          cron: "59 23 * * *"
+          cron: "0 9 * * *"
           filters:
             branches:
               only:
                 - master
-                - beta
     jobs:
       - node
       - android:
           requires:
             - node
-  forcedbuild:
+  force:
     jobs:
       - node:
           filters:
             branches:
-              only: /^forcedbuild-.*/
+              only: /.*-force/
       - android:
           filters:
             branches:
-              only: /^forcedbuild-.*/
+              only: /.*-force/
           requires:
             - node
